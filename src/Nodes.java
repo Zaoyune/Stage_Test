@@ -1,68 +1,52 @@
-import java.util.ArrayList;
-import java.util.List;
+import jdk.nashorn.internal.objects.Global;
 
-class Solution_Node {
+import java.awt.*;
+import java.awt.event.InputEvent;
 
-    public static int findNetworkEndpoint(int startNodeId ,int[] fromIds,int[] toIds) {
-        List<Integer> List1 = new ArrayList<Integer>() {{ for (int i : toIds) add(i); }};
-        List<Integer> fromIdsList = new ArrayList<Integer>() {{ for (int i : fromIds) add(i); }};
+public class Nodes {
 
-        if((toIds.length<= 0)||(toIds.length > 10000))
-        {
-            return 0;
-        }
+      public static class TreeNode {
+          int val;
+          TreeNode left;
+          TreeNode right;
+          TreeNode() {}
+          TreeNode(int val) { this.val = val; }
+          TreeNode(int val, TreeNode left, TreeNode right) {
+              this.val = val;
+              this.left = left;
+              this.right = right;
+         }
+      }
+      static int GoodNode(TreeNode root, int goodNode, int NodesNumber){
+          if (root != null) {
+              if (root.val >= goodNode) {
+                  NodesNumber++;
+                  goodNode = root.val;
+              }
 
+              NodesNumber = GoodNode(root.right, goodNode, NodesNumber);
+              NodesNumber = GoodNode(root.left, goodNode, NodesNumber);
+          }
 
-        boolean node = false;
-        boolean finNode = false;
-        boolean s = true;
-
-        int nodes = startNodeId;
-        int nodevaleur = Integer.MIN_VALUE;
-        int lastindex = Integer.MIN_VALUE;
-
-        while (!node && !finNode)
-        {
-            if (!s && (nodes == startNodeId))
-            {
-                finNode = true;
-                nodevaleur = lastindex;
-                break;
-            }
-            if(s)
-            {
-                s = false;
-            }
-
-            if(fromIdsList.contains(node))
-            {
-                lastindex = nodevaleur;
-                nodevaleur = fromIdsList.indexOf(node);
-                nodes = List1.get(nodevaleur);
-            }
-            else
-            {
-                node = true;
-            }
-        }
-        return nodevaleur;
+          return NodesNumber;
+      }
+    public static int goodNodes(TreeNode root) {
+        int goodNode = root.val;
+        int nodeNumbers = 0;
+        System.out.println(GoodNode(root,goodNode,nodeNumbers));
+        return GoodNode(root,goodNode,nodeNumbers);
     }
 
     public static void main(String[] args) {
-        int debutnode = 6;
-        int n = 4;
-
-        int[] fromIds = new int[] { 4, 9, 6, 1 };
-        int[] toIds = new int[] { 9, 5, 1, 4 };
-        System.out.println((debutnode));
-        System.out.println(n);
-
-        for (int i = 0; i < n; i++)
-        {
-            System.out.println(+ fromIds[i]+ " " + toIds[i]);
-        }
-
-        int finnode = findNetworkEndpoint(debutnode, fromIds, toIds);
-        System.out.println("" + finnode);
+        TreeNode t3 = new TreeNode(10,null,null);
+        TreeNode t4 = new TreeNode(2,null,null);
+        TreeNode t1 = new TreeNode(1,null,null);
+        TreeNode t2 = new TreeNode(4,null,null);
+        TreeNode treeNodeLeft = new TreeNode(3,t2,t4);
+        TreeNode treeNodeRight = new TreeNode(4,t1,t4);
+        TreeNode treeNode = new TreeNode(3,treeNodeLeft,null);
+        goodNodes(treeNode);
     }
 }
+
+

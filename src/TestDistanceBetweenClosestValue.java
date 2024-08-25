@@ -9,16 +9,20 @@ class TestDistanceBetweenClosestValue {
         int soust;
         for(int i=0;i<numbers.length;i++){
                 for(int j=i+1;j<numbers.length;j++){
-                    soust = numbers[i]-numbers[j];
-                    System.out.println(soust);
+
+                    soust = Math.abs(numbers[i]-numbers[j]);
+                    if(soust<max){
+                        max = soust;
+                    }
+                   /* System.out.println(soust);
                     ListValues.add(Math.abs(soust));
-                    System.out.println(Math.abs(soust));
+                    System.out.println(Math.abs(soust));*/
                 }
-            for (Integer l : ListValues) {
+            /*for (Integer l : ListValues) {
                 if (max > l) {
                     max = l;
                 }
-            }
+            }*/
         }
         return max;
     }
